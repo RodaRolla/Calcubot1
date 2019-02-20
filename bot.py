@@ -26,7 +26,7 @@ def xyecho(bot, update):
 	
 if __name__ == '__main__':
 	
-	logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+	logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 	updater = Updater(token='764096237:AAFJCh0TuxxjJ47peMMjpOTCVp4S-aGJcG0',
 						request_kwargs={'proxy_url':'socks5://phobos.public.opennetwork.cc:1090',  'urllib3_proxy_kwargs': {'username': '257314152', 'password': 'cWH5NtTJ'}}) 
 	print("Create updater")
