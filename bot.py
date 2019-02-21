@@ -24,13 +24,13 @@ def start(bot, update):
 def calc(bot, update, args):
 	line=''.join(args) # это строка без пробелов
 	out=''
-	r=re.match('([0-9+*/-]+)=',line)
+	r=re.match('(.+)=',line)
 	if r!=None:
 		line=r.group(1)
 		try:
 			out=str(superCalculator(line))
 		except Exception as e:
-			out="Cal errot: %s" % e.args
+			out="Ошибка вычисления: %s" % e.args
 	else:
 		out='айяйяй'
 	bot.send_message(chat_id=update.message.chat_id, text="%s, it is %s = %s " % (update.message.from_user.first_name, line, out))

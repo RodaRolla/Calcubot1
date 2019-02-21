@@ -1,5 +1,8 @@
 #!python.exe
-import re
+#-*-coding: utf-8-*-
+
+#import re
+
 # Стек для вычислений. Здесь лежат числа
 numStack=[]
 def equality():
@@ -31,7 +34,7 @@ def division():
 		numStack.append(left/right)
 	except ZeroDivisionError:
 		print('T_T')
-		raise Exception("Execution error. Zero division for %d/%d" % (left,right))
+		raise Exception("Ошибка выполнения. Деление на ноль для %d/%d" % (left,right))
 func={
 	'+': addition,
 	'-': subtraction,
@@ -102,7 +105,7 @@ def infixToPostfix(ls):
 				stack.append(token)
 		else:
 			print("Unknows token '%s'" % token)
-			raise Exception("Syntax error. Unknows token '%s'" % token)
+			raise Exception("Синтаксическая ошибка. Неопознанный токен '%s'" % token)
 		
 		# число -> в аут
 		# оператор - в стек
@@ -121,7 +124,7 @@ def doToken(token):
 			func[token]()
 		else:
 			print("Syntax error with '%s'" % token) # throw exeption!
-			raise Exception("Syntax error with '%s'" % token)
+			raise Exception("Синтаксическая ошибка в '%s'" % token)
 
 def superCalculator(str):
 	global numStack
