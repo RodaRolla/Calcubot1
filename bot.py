@@ -34,13 +34,10 @@ def calc(bot, update, args):
 	else:
 		out='айяйяй'
 	bot.send_message(chat_id=update.message.chat_id, text="%s, it is %s = %s " % (update.message.from_user.first_name, line, out))
-		
+
 
 def xyecho(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text=doQu(update.message.text))
-	#firstN=update.message.from_user.first_name
-	#lastN=update.message.from_user.last_name
-	#bot.send_message(chat_id=update.message.chat_id, text="Dear %s %s. You have said fucking %s" % (firstN, lastN))
 	
 if __name__ == '__main__':
 	
@@ -60,4 +57,5 @@ if __name__ == '__main__':
 	updater.start_polling()
 	print("Idle")
 	updater.idle()
+
 
