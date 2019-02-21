@@ -11,7 +11,6 @@ def doQu(str):
 	else:
 		return u'не понял'
 	
-
 def think(ls):
 	return ''.join(ls)
 
@@ -19,14 +18,11 @@ def start(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text=doQu(update.message.text))
 	
 def calc(bot, update, args):
-		bot.send_message(chat_id=update.message.chat_id, text="%s, it is %d " % (update.message.from_user.first_name, superCalculator(''.join(args))))
+	bot.send_message(chat_id=update.message.chat_id, text="%s, it is %d " % (update.message.from_user.first_name, superCalculator(''.join(args))))
 		
 
 def xyecho(bot, update):
-		bot.send_message(chat_id=update.message.chat_id, text=doQu(update.message.text))
-	#firstN=update.message.from_user.first_name
-	#lastN=update.message.from_user.last_name
-	#bot.send_message(chat_id=update.message.chat_id, text="Dear %s %s. You have said fucking %s" % (firstN, lastN))
+	bot.send_message(chat_id=update.message.chat_id, text=doQu(update.message.text))
 	
 if __name__ == '__main__':
 	
