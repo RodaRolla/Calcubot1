@@ -8,11 +8,7 @@ from telegram.ext import MessageHandler, Filters
 import logging
 import re
 
-def doQu(str):
-	if u'ку' in str.lower():
-		return u'хай'
-	else:
-		return u'не понял'
+
 
 def think(ls):
 	return ''.join(ls)
@@ -26,18 +22,35 @@ def calc(bot, update, args):
 	# что-то
 	bot.send_message(chat_id=update.message.chat_id, text="%s, it is %s = %s " % (update.message.from_user.first_name, line, out))
 
+# Если это строка для калькулятора -- возвращаем выражение
+# Иначе None
+def isCalc(s):
+	r=re.match('(.+)=',s)
+	if r!=None:
+		return ''.join(r.group(1).split(' '))
+	return None
+
+def isQu(s):
+	if u'ку' in s.lower():
+		return True
+	return False
+
+def doQu(s,n):
+	return u'хай %s' % n
 
 def xyecho(bot, update):
-	r=re.match('(.+)=',update.message.text)
-	if r!=None:
-		line=''.join(r.group(1).split(' '))
+	if isCalc(update.message.text):
 		try:
+			line=isCalc(update.message.text)
 			out="%s = %d" % (line,superCalculator(line))
 		except Exception as e:
 			out="Ошибка вычисления: %s" % e.args
-	else:
-		out=doQu(update.message.text)
-	bot.send_message(chat_id=update.message.chat_id, text=out)
+		bot.send_message(chat_id=update.message.chat_id, text=out)
+		return
+	if isQu(update.message.text):
+		bot.send_message(chat_id=update.message.chat_id, text=doQu(update.message.text, update.message.from_user.first_name))
+		return
+	bot.send_message(chat_id=update.message.chat_id, text="Не понял")
 	
 if __name__ == '__main__':
 	
