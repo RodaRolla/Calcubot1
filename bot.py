@@ -9,8 +9,7 @@ import logging
 import re
 
 def doQu(str):
-	str=str.lower()
-	if u'ку' in str:
+	if u'ку' in str.lower():
 		return u'хай'
 	else:
 		return u'не понял'
@@ -24,20 +23,21 @@ def start(bot, update):
 def calc(bot, update, args):
 	line=''.join(args) # это строка без пробелов
 	out=''
-	r=re.match('(.+)=',line)
-	if r!=None:
-		line=r.group(1)
-		try:
-			out=str(superCalculator(line))
-		except Exception as e:
-			out="Ошибка вычисления: %s" % e.args
-	else:
-		out='айяйяй'
+	# что-то
 	bot.send_message(chat_id=update.message.chat_id, text="%s, it is %s = %s " % (update.message.from_user.first_name, line, out))
 
 
 def xyecho(bot, update):
-	bot.send_message(chat_id=update.message.chat_id, text=doQu(update.message.text))
+	r=re.match('(.+)=',update.message.text)
+	if r!=None:
+		line=''.join(r.group(1).split(' '))
+		try:
+			out="%s = %d" % (line,superCalculator(line))
+		except Exception as e:
+			out="Ошибка вычисления: %s" % e.args
+	else:
+		out=doQu(update.message.text)
+	bot.send_message(chat_id=update.message.chat_id, text=out)
 	
 if __name__ == '__main__':
 	
