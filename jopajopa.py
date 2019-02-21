@@ -1,8 +1,10 @@
 #!python.exe
-
+import re
 # Стек для вычислений. Здесь лежат числа
 numStack=[]
-
+def equality():
+	print()
+	
 def multiplying():
 	global numStack
 	numStack.append(numStack.pop()*numStack.pop())
@@ -28,12 +30,14 @@ def division():
 		left=numStack.pop()
 		numStack.append(left/right)
 	except ZeroDivisionError:
-		print('T_T')	
+		print('T_T')
+		raise Exception("Execution error. Zero division for %d/%d" % (left,right))
 func={
 	'+': addition,
 	'-': subtraction,
 	'*': multiplying,
-	'/': division
+	'/': division,
+	'=': equality
 }
 	
 def isNumber(ls):
@@ -90,14 +94,15 @@ def infixToPostfix(ls):
 		if isNumber(token):
 			out.append(int(token))
 			print(out)
-		if isFunc(token):
+		elif isFunc(token):
 			if stack==[]:
 				stack.append(token)
 			else:
 				out.append(stack.pop())
 				stack.append(token)
-			#if token == '+':
-			#	out.append(out.pop()_int+out.pop())
+		else:
+			print("Unknows token '%s'" % token)
+			raise Exception("Syntax error. Unknows token '%s'" % token)
 		
 		# число -> в аут
 		# оператор - в стек
@@ -116,6 +121,7 @@ def doToken(token):
 			func[token]()
 		else:
 			print("Syntax error with '%s'" % token) # throw exeption!
+			raise Exception("Syntax error with '%s'" % token)
 
 def superCalculator(str):
 	global numStack
@@ -130,9 +136,10 @@ if __name__ == "__main__":
 	while True:
 		result=superCalculator(input("Code: "))
 		print("Result=%d" % result)
+		str=input("Text = ")
+		
 
-
-
+	
 
 
 

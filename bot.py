@@ -1,28 +1,46 @@
 #!python
+#-*-coding: utf-8-*-
 
 from jopajopa import superCalculator
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 import logging
+import re
 
+def doQu(str):
+	str=str.lower()
+	if u'ку' in str:
+		return u'хай'
+	else:
+		return u'не понял'
 
 def think(ls):
 	return ''.join(ls)
 
 def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+	bot.send_message(chat_id=update.message.chat_id, text=doQu(update.message.text))
 	
 def calc(bot, update, args):
-		bot.send_message(chat_id=update.message.chat_id, text="%s, it is %d " % (update.message.from_user.first_name, superCalculator(''.join(args))))
+	line=''.join(args) # это строка без пробелов
+	out=''
+	r=re.match('([0-9+*/-]+)=',line)
+	if r!=None:
+		line=r.group(1)
+		try:
+			out=str(superCalculator(line))
+		except Exception as e:
+			out="Cal errot: %s" % e.args
+	else:
+		out='айяйяй'
+	bot.send_message(chat_id=update.message.chat_id, text="%s, it is %s = %s " % (update.message.from_user.first_name, line, out))
 		
+
 def xyecho(bot, update):
-	answer=''
-	for symb in update.message.text:
-		answer+="(%s)" % symb
-	firstN=update.message.from_user.first_name
-	lastN=update.message.from_user.last_name
-	bot.send_message(chat_id=update.message.chat_id, text="Dear %s %s. You have said fucking %s" % (firstN, lastN,answer))
+	bot.send_message(chat_id=update.message.chat_id, text=doQu(update.message.text))
+	#firstN=update.message.from_user.first_name
+	#lastN=update.message.from_user.last_name
+	#bot.send_message(chat_id=update.message.chat_id, text="Dear %s %s. You have said fucking %s" % (firstN, lastN))
 	
 if __name__ == '__main__':
 	
