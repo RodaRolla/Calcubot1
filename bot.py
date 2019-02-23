@@ -4,6 +4,7 @@
 from jopajopa import superCalculator
 from fileObj import createobj, findobj
 from botHelp import *
+from botWho import *
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
@@ -12,13 +13,13 @@ import re
 
 adminID=[]
 
-def think(ls):
-	return ''.join(ls)
 
-def start(bot, update):
-	bot.send_message(chat_id=update.message.chat_id, text=doQu(update.message.text))
-
-
+def who(bot, update):
+	try:	
+		bot.send_message(chat_id=update.message.chat_id, text=nameWho(update.message.text))
+	except:
+		bot.send_message(chat_id=update.message.chat_id, text='вы написали: %s' % update.message.text)
+		bot.send_message(chat_id=update.message.chat_id, text='я понимаю только\n%s' %''.join(open('dict.txt',encoding='utf-8')))
 def help(bot,update):
 	try:
 		bot.send_message(chat_id=update.message.chat_id, text=longHelp())
@@ -76,11 +77,11 @@ if __name__ == '__main__':
 	updater = Updater(token='764096237:AAFJCh0TuxxjJ47peMMjpOTCVp4S-aGJcG0',
 						request_kwargs={'proxy_url':'socks5://phobos.public.opennetwork.cc:1090',  'urllib3_proxy_kwargs': {'username': '257314152', 'password': 'cWH5NtTJ'}}) 
 	print("Create updater")
-	start_handler = CommandHandler('start', start)
+	who_handler = CommandHandler('who' , who)
 	calc_handler = CommandHandler('calc', calc, pass_args=True)
 	help_handler = CommandHandler('help', help)
 	print("Create command handler")
-	updater.dispatcher.add_handler(start_handler)
+	updater.dispatcher.add_handler(who_handler)
 	updater.dispatcher.add_handler(calc_handler)
 	updater.dispatcher.add_handler(help_handler)
 	print("Start filters")
@@ -90,5 +91,4 @@ if __name__ == '__main__':
 	updater.start_polling()
 	print("Idle")
 	updater.idle()
-
 
