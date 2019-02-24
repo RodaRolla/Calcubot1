@@ -1,10 +1,11 @@
-#!python.exe
+#!/usr/bin/python3
 #-*-coding: utf-8-*-
 
 #import re
 
 # Стек для вычислений. Здесь лежат числа
 numStack=[]
+
 def equality():
 	print()
 	
